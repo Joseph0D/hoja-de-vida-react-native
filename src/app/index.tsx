@@ -1,98 +1,103 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from "@expo/vector-icons";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import MiBoton from "../components/MiBoton";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Inicio() {
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <ScrollView
+      style={estilos.contenedor}
+      contentContainerStyle={estilos.contenido}
+    >
+      <View style={estilos.avatarContenedor}>
+        <Ionicons name="person-circle" size={100} color="#2563eb" />
+        <Text style={estilos.nombre}>Joseph Daniel Giraldo Moreno</Text>
+        <Text style={estilos.profesion}>Tecnólogo en ADSO</Text>
+      </View>
+
+      <View style={estilos.seccion}>
+        <Text style={estilos.subtitulo}>Perfil Profesional</Text>
+        <Text style={estilos.parrafo}>
+          Aprendiz del SENA apasionado por el desarrollo de aplicaciones móviles
+          y web. Con habilidades en React Native, JavaScript, TypeScript,
+          Python, Node.js y gestión de bases de datos relacionales y no
+          relacionales.
+        </Text>
+      </View>
+
+      <View style={estilos.seccion}>
+        <Text style={estilos.subtitulo}>Contacto y Redes</Text>
+
+        <MiBoton
+          textoBoton="Enviar Correo"
+          nombreIcono="mail"
+          colorBoton="#eab308"
+          onPress={() =>
+            Alert.alert("Correo Electrónico", "joseph.giraldo@misena.edu.co")
+          }
+        />
+
+        <MiBoton
+          textoBoton="Llamar"
+          nombreIcono="call"
+          colorBoton="#3b82f6"
+          onPress={() =>
+            Alert.alert("Teléfono de Contacto", "+57 300 123 4567")
+          }
+        />
+
+        <MiBoton
+          textoBoton="Repositorios GitHub"
+          nombreIcono="logo-github"
+          colorBoton="#1e293b"
+          onPress={() =>
+            Alert.alert("GitHub Oficial", "https://github.com/Joseph0D")
+          }
+        />
+
+        <MiBoton
+          textoBoton="Ver Perfil LinkedIn"
+          nombreIcono="logo-linkedin"
+          colorBoton="#0a66c2"
+          onPress={() =>
+            Alert.alert("LinkedIn", "linkedin.com/in/joseph-daniel-giraldo")
+          }
+        />
+
+        <MiBoton
+          textoBoton="Facebook"
+          nombreIcono="logo-facebook"
+          colorBoton="#1877f2"
+          onPress={() => Alert.alert("Facebook", "facebook.com/joseph.giraldo")}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+const estilos = StyleSheet.create({
+  contenedor: { flex: 1, backgroundColor: "#f8fafc" },
+  contenido: { padding: 20 },
+  avatarContenedor: { alignItems: "center", marginBottom: 20 },
+  nombre: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#0f172a",
+    marginTop: 8,
+    textAlign: "center",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  profesion: { fontSize: 16, color: "#2563eb", fontWeight: "600" },
+  seccion: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    elevation: 1,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  subtitulo: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#1e293b",
+    marginBottom: 8,
   },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
+  parrafo: { fontSize: 14, color: "#475569", lineHeight: 20 },
 });
